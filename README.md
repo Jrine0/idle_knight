@@ -1,4 +1,15 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Idle Knight
+
+Idle Knight is a Web3-native social media platform where creators can publish gated and public content, and users can discover, follow, and subscribe using wallet-based identity.
+
+Built with Next.js, the app focuses on decentralized creator communities, onchain-style subscriptions, and a clean dashboard experience for posting media and managing access.
+
+## What This Project Does
+
+-   Lets creators build profiles and publish content (text, image, video, polls, and subscription posts)
+-   Enables users to explore creators and subscribe to premium content
+-   Supports wallet-connected flows for Web3-first identity and interactions
+-   Provides creator and subscriber dashboards for content and account management
 
 ## Getting Started
 
