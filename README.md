@@ -1,47 +1,53 @@
 # Idle Knight
 
-Idle Knight is a Web3-native social media platform where creators can publish gated and public content, and users can discover, follow, and subscribe using wallet-based identity.
+Idle Knight is a Web3 creator platform where creators publish public and premium content, and supporters subscribe with wallet-based identity.
 
-Built with Next.js, the app focuses on decentralized creator communities, onchain-style subscriptions, and a clean dashboard experience for posting media and managing access.
+## What Idle Knight Does
 
-## What This Project Does
+-   Wallet-native identity for creators and supporters
+-   Creator profiles with on-chain ownership controls
+-   Public and premium content publishing
+-   Subscription payments with expiry-based access windows
+-   Premium content gating backed by contract state
+-   Event-driven activity for subscriptions, payments, and access checks
 
--   Lets creators build profiles and publish content (text, image, video, polls, and subscription posts)
--   Enables users to explore creators and subscribe to premium content
--   Supports wallet-connected flows for Web3-first identity and interactions
--   Provides creator and subscriber dashboards for content and account management
+## Architecture Overview
 
-## Getting Started
+### On-chain responsibilities
 
-First, run the development server:
+-   Creator profile ownership and updates
+-   Compact content metadata (IDs, creator ownership, access policy)
+-   Subscription accounting (`subscriber -> creator -> expiry`)
+-   Access verification for premium content
+-   Payment settlement through contract-mediated token transfers
+
+### Off-chain responsibilities
+
+-   Media storage and delivery (IPFS / DB / CDN)
+-   Feed indexing and query optimization
+-   Optional API-side caching and request shaping
+
+> Large media assets are intentionally kept off-chain. Only references and access rules are recorded on-chain.
+
+## Project Structure
+
+-   `soroban/idle-knight-contract`: contract code for creators, content metadata, subscriptions, and access gating
+-   `backend/sorobanService.ts`: backend integration layer for chain health checks and access validation hooks
+-   `src/lib/stellar/*`: wallet connection and domain helpers used by the frontend
+
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production Checklist
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Add contract test coverage (unit + integration).
+2. Implement full read/write transaction pipelines for all user flows.
+3. Index and persist events for analytics and creator dashboards.
+4. Add subscription extension policy (stack/overwrite) and billing edge-case tests.
+5. Add monitoring and alerting for RPC latency and failed transaction rates.
