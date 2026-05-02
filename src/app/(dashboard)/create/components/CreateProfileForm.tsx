@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -25,7 +25,7 @@ const MAX_UPLOAD_SIZE = 5 * 1024 * 1024; // 5MB
 const MAX_MB = MAX_UPLOAD_SIZE / 1024 / 1024;
 const ACCEPTED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
-function getImageData(event: ChangeEvent) {
+function getImageData(event: ChangeEvent<HTMLInputElement>) {
     // FileList is immutable, so we need to create a new one
     const dataTransfer = new DataTransfer();
 
@@ -75,12 +75,12 @@ export function CreateProfileForm({ setOpen }: { setOpen: (open: boolean) => voi
     const { mutateAsync: signTransaction } = useSignTransaction();
     const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const form = useForm<z.infer>({
+    const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {},
     });
 
-    async function onSubmit(data: z.infer) {
+    async function onSubmit(data: z.infer<typeof formSchema>) {
         setOpen(false);
         setIsSubmitted(true);
 

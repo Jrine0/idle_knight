@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
-export const Settings = () => {
+const Settings = () => {
     const { data, isPending } = useKeyPair();
     const [showPrivateKey, setShowPrivateKey] = useState(false);
 
